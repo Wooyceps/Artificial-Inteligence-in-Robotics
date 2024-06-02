@@ -57,7 +57,7 @@ Augmentacja danych odbywa się podczas procesu treningu modelu. W przypadku uży
 
 Wykres funkcji straty modelu podczas procesu uczenia przedstawia zmiany w wartości funkcji straty modelu w trakcie kolejnych epok. Na osi X mamy epoki - każda epoka to jedno przejście przez cały zestaw danych treningowych. Na osi Y mamy wartość funkcji straty.
 
-![Wykres funkcji straty](output.png)
+![Wykres funkcji straty](loss.png)
 
 Dwie linie na wykresie reprezentują:
 
@@ -66,3 +66,36 @@ Dwie linie na wykresie reprezentują:
 - `val_loss` (czerwona linia): To jest wartość funkcji straty na zbiorze walidacyjnym. Pokazuje, jak dobrze model radzi sobie z przewidywaniem wyników na nowych, nieznanych mu wcześniej danych. Im niższa wartość, tym lepiej model radzi sobie z generalizacją swojej wiedzy na nowe dane.
 
 Różnica między tymi dwoma liniami pokazuje, jak dobrze model generalizuje swoją wiedzę. Jeśli linie są blisko siebie i mają podobne wartości, oznacza to, że model dobrze radzi sobie zarówno z uczeniem się, jak i generalizacją. Jeśli linia `val_loss` jest znacznie wyższa od linii `loss`, może to oznaczać, że model jest przeuczony - dobrze radzi sobie z danymi treningowymi, ale nie jest w stanie dobrze przewidywać wyników na nowych danych.
+
+# Macierz pomyłek (confusion matrix)
+
+Macierz pomyłek, znana również jako macierz błędów, to narzędzie używane w statystyce i uczeniu maszynowym do wizualizacji wydajności algorytmu klasyfikacyjnego. Macierz składa się z czterech komponentów: prawdziwie pozytywnych (TP), fałszywie pozytywnych (FP), prawdziwie negatywnych (TN) i fałszywie negatywnych (FN). 
+
+- TP to liczba prawidłowo sklasyfikowanych pozytywnych przypadków.
+- FP to liczba negatywnych przypadków błędnie sklasyfikowanych jako pozytywne.
+- TN to liczba prawidłowo sklasyfikowanych negatywnych przypadków.
+- FN to liczba pozytywnych przypadków błędnie sklasyfikowanych jako negatywne.
+
+![Macierz pomyłek](confusion_matrix.png)
+
+W kontekście kodu, macierz pomyłek jest generowana za pomocą funkcji `confusion_matrix` z biblioteki `sklearn.metrics`. Na przykład:
+
+```python
+tn, fp, fn, tp = confusion_matrix(actClass, predClass).ravel()
+```
+
+Gdzie `actClass` to lista rzeczywistych klas, a `predClass` to lista przewidzianych klas. Wynik jest przypisywany do czterech zmiennych: `tn`, `fp`, `fn` i `tp`, które reprezentują wartości macierzy pomyłek.
+
+## Krzywa ROC
+
+Krzywa ROC (Receiver Operating Characteristic) to narzędzie używane w statystyce i uczeniu maszynowym do oceny wydajności modelu klasyfikacyjnego. Jest to wykres, który pokazuje czułość modelu (odsetek prawdziwie pozytywnych wyników) w stosunku do 1 - specyficzności (odsetek fałszywie pozytywnych wyników) na wszystkich progach klasyfikacji.
+
+Czułość, znana również jako prawdziwie pozytywna stopa, mierzy proporcję pozytywnych wyników, które są prawidłowo zidentyfikowane. Specyficzność, znana również jako prawdziwie negatywna stopa, mierzy proporcję negatywnych wyników, które są prawidłowo zidentyfikowane.
+
+Krzywa ROC jest generowana poprzez rysowanie czułości na osi Y i 1 - specyficzności na osi X dla różnych progi klasyfikacji. Prog klasyfikacji to punkt odcięcia, powyżej którego obserwacja jest klasyfikowana jako pozytywna.
+
+![Krzywa ROC](roc.png)
+
+Krzywa ROC jest używana do oceny wydajności modelu klasyfikacyjnego, niezależnie od progu klasyfikacji. Idealny model ma krzywą ROC, która przechodzi przez górny lewy róg wykresu, co oznacza, że ma 100% czułość (brak fałszywie negatywnych wyników) i 100% specyficzności (brak fałszywie pozytywnych wyników). W praktyce krzywa ROC modelu zwykle znajduje się pomiędzy tą idealną krzywą a linią przekątną, która reprezentuje losowy model klasyfikacyjny.
+
+Pole pod krzywą ROC (AUC - Area Under the Curve) jest miarą ogólnej wydajności modelu. AUC wynosi od 0,5 dla modelu losowego do 1 dla idealnego modelu. Im większe AUC, tym lepszy model.
