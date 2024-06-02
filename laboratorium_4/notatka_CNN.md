@@ -67,7 +67,7 @@ Dwie linie na wykresie reprezentują:
 
 Różnica między tymi dwoma liniami pokazuje, jak dobrze model generalizuje swoją wiedzę. Jeśli linie są blisko siebie i mają podobne wartości, oznacza to, że model dobrze radzi sobie zarówno z uczeniem się, jak i generalizacją. Jeśli linia `val_loss` jest znacznie wyższa od linii `loss`, może to oznaczać, że model jest przeuczony - dobrze radzi sobie z danymi treningowymi, ale nie jest w stanie dobrze przewidywać wyników na nowych danych.
 
-# Macierz pomyłek (confusion matrix)
+## Macierz pomyłek (confusion matrix)
 
 Macierz pomyłek, znana również jako macierz błędów, to narzędzie używane w statystyce i uczeniu maszynowym do wizualizacji wydajności algorytmu klasyfikacyjnego. Macierz składa się z czterech komponentów: prawdziwie pozytywnych (TP), fałszywie pozytywnych (FP), prawdziwie negatywnych (TN) i fałszywie negatywnych (FN). 
 
@@ -75,7 +75,7 @@ Macierz pomyłek, znana również jako macierz błędów, to narzędzie używane
 - FP to liczba negatywnych przypadków błędnie sklasyfikowanych jako pozytywne.
 - TN to liczba prawidłowo sklasyfikowanych negatywnych przypadków.
 - FN to liczba pozytywnych przypadków błędnie sklasyfikowanych jako negatywne.
-
+![Schemat macierzy pomyłek](conf_matrix_wiki.png)
 ![Macierz pomyłek](confusion_matrix.png)
 
 W kontekście kodu, macierz pomyłek jest generowana za pomocą funkcji `confusion_matrix` z biblioteki `sklearn.metrics`. Na przykład:
